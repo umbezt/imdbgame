@@ -80,6 +80,67 @@
             @endif
 
             <div class="content">
+
+
+<?php
+                function cast_e(DOMNode $node) : DOMElement {
+                    if ($node) {
+                        if ($node->nodeType === XML_ELEMENT_NODE) {
+                            return $node;
+                        }
+                    }
+                    return new DOMElement('div');
+                }
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://www.imdb.com/chart/top?ref_=nb_mv_3_chttp",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+
+$dom = new DOMDocument();
+$dom->loadHTML($response);
+
+    $main = $dom->getElementById("main");
+if($main){
+    $tables = $main->getElementsByTagName('table');
+    if($tables->count() > 0) {
+        $table = $tables->item(0); // first item
+        $tableElement =  cast_e( $table );
+
+        $rowList = $tableElement->getElementsByTagName('tr');
+
+        foreach ($rowList as $row) {
+            $rowElement = cast_e($row);
+            $colList = $rowElement->getElementsByTagName('td');
+
+            foreach ($colList => $col){
+                $colElement = cast_e($col);
+
+                $className = $colElement->getAttribute('class');
+                echo $className. " *";
+            }
+            echo "<br>";
+        }
+
+
+    }
+}
+//echo $response;
+?>
+
+
+
                 <div class="title m-b-md">
                     Laravel
                 </div>
