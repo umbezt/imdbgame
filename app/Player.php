@@ -14,4 +14,13 @@ class Player extends Model
     protected $fillable = [
         'name', 'hashed_name',
     ];
+
+    public function player1Game()
+    {
+        return $this->hasMany(Game::class, 'player1' );
+    }
+    public function player2Game()
+    {
+        return $this->hasMany(Game::class, 'player2' );
+    }
 }

@@ -12,19 +12,13 @@
   <component name="ChangeListManager">
     <list default="true" id="1e6b4640-c6a0-443c-b420-eee2d3934dd1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GameController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MovieController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PlayerController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Game.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Game.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PlayerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PlayerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Player.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Player.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_11_055000_create_players_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_11_055000_create_players_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_11_055030_create_games_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_11_055030_create_games_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_11_055733_create_game_movies_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_11_055733_create_game_movies_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/MovieFetcherTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/MovieFetcherTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/database.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/storage/database.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/PlayerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/PlayerTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,6 +157,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary" value="PHPUnit" />
@@ -175,11 +170,25 @@
       <recent name="C:\xampp\htdocs\GuessYear\tests\Feature" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHPUnit.PlayerTest.testCanSetName">
+    <configuration name="PlayerTest.testCanSetName" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\PlayerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PlayerTest.php" method="testCanSetName" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="PlayerTest.testCanStartGame" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\PlayerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PlayerTest.php" method="testCanStartGame" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.PlayerTest.testCanSetName" />
+        <item itemvalue="PHPUnit.PlayerTest.testCanStartGame" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -190,7 +199,7 @@
       <option name="presentableId" value="Default" />
       <updated>1605073299238</updated>
       <workItem from="1605073300311" duration="2964000" />
-      <workItem from="1605081168678" duration="23863000" />
+      <workItem from="1605081168678" duration="29912000" />
     </task>
     <servers />
   </component>
@@ -217,6 +226,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="475" y="55" key="#PHP/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605085596535" />
+    <state x="2472" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605169959945">
+      <screen x="1920" y="9" width="1920" height="1040" />
+    </state>
+    <state x="2472" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605169959945" />
     <state x="512" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605160247370">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -225,35 +238,36 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605160905311" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605161711460">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2544" y="220" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605171310313">
+      <screen x="1920" y="9" width="1920" height="1040" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605161711460" />
-    <state x="592" y="218" key="FileChooserDialogImpl" timestamp="1605100763555">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2544" y="220" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605171310313" />
+    <state x="2660" y="284" key="FileChooserDialogImpl" timestamp="1605169941453">
+      <screen x="1920" y="9" width="1920" height="1040" />
     </state>
     <state x="592" y="218" key="FileChooserDialogImpl/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605100763555" />
-    <state x="2660" y="284" key="FileChooserDialogImpl/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605076293984" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1605076295193">
+    <state x="2660" y="284" key="FileChooserDialogImpl/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605169941453" />
+    <state width="1877" height="364" key="GridCell.Tab.0.bottom" timestamp="1605171495454">
       <screen x="1920" y="9" width="1920" height="1040" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605073311222" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605076295193" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1605076295193">
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605169826253" />
+    <state width="1877" height="364" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605171495454" />
+    <state width="1877" height="364" key="GridCell.Tab.0.center" timestamp="1605171495454">
       <screen x="1920" y="9" width="1920" height="1040" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605073311222" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605076295193" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1605076295193">
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605169826253" />
+    <state width="1877" height="364" key="GridCell.Tab.0.center/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605171495454" />
+    <state width="1877" height="364" key="GridCell.Tab.0.left" timestamp="1605171495453">
       <screen x="1920" y="9" width="1920" height="1040" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605073311221" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605076295193" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1605076295193">
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605169826253" />
+    <state width="1877" height="364" key="GridCell.Tab.0.left/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605171495453" />
+    <state width="1877" height="364" key="GridCell.Tab.0.right" timestamp="1605171495454">
       <screen x="1920" y="9" width="1920" height="1040" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605073311222" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605076295193" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605169826253" />
+    <state width="1877" height="364" key="GridCell.Tab.0.right/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605171495454" />
     <state x="570" y="135" key="NewPhpClassDialog" timestamp="1605158059228">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -266,10 +280,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="518" y="156" key="com.jetbrains.php.test.PhpNewTestDialog/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605159373784" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1605160618235">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2459" y="192" width="840" height="856" key="search.everywhere.popup" timestamp="1605170669583">
+      <screen x="1920" y="9" width="1920" height="1040" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.9.1920.1040@0.0.1536.824" timestamp="1605160618235" />
+    <state x="2459" y="192" width="840" height="856" key="search.everywhere.popup/0.0.1536.824/1920.9.1920.1040@1920.9.1920.1040" timestamp="1605170669583" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -278,11 +293,6 @@
           <url>file://$PROJECT_DIR$/routes/api.php</url>
           <line>20</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/tests/Feature/PlayerTest.php</url>
-          <line>18</line>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

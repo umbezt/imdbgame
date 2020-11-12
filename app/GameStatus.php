@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Game extends Model
+class GameStatus extends Model
 {
     //
     /**
@@ -13,6 +13,6 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'player1', 'player2',
+        'description',
     ];
 }

@@ -31,39 +31,63 @@ class PlayerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $data = $request->validate(['name' => 'required|min:1|max:280|string']);
-        $data['hashed_name'] = Utility::hashName($data['name'] , $request->ip());
+        $data['hashed_name'] = Utility::hashName($data['name'], $request->ip());
         $hasAlreadySetName = Utility::getPlayer($data['hashed_name']);
-        if($hasAlreadySetName)
-        {
-            $player = $hasAlreadySetName;
-        } else {
-            $player = Player::create($data);
-        }
+        if ($hasAlreadySetName->count() > 0) {
 
-        return response()->json( array('player' => $player))->setStatusCode(201);
+            $result = array('player' => $hasAlreadySetName->first());
+            return response()->json($result)->setStatusCode(201);
+        }
+        $player = Player::create($data);
+
+
+        $result = array('player' => $player);
+        return response()->json($result)->setStatusCode(201);
     }
+
+
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
     }
+    /**
+     * Display the specified resource.
+     *
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function startGame()
+    {
+        //
+        $cookie = '';
+        if(\request()->hasCookie('player'))
+        {
+            $cookie = \request()->cookie('player');
+        }
+        $player = (Utility::getPlayer($cookie))->first() ;
+
+        $hasActiveGame = Utility::hasActiveGame($player);
+
+
+    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -74,8 +98,8 @@ class PlayerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -86,7 +110,7 @@ class PlayerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

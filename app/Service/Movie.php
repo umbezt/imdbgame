@@ -21,7 +21,7 @@ class Movie
 
         return [
             'title' => $this->title,
-            'yearOfRelease' =>$this->yearOfRelease,
+            'yearOfRelease' => $this->yearOfRelease,
             'imageUrl' => $this->imageUrl
         ];
     }
