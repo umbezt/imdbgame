@@ -57,7 +57,8 @@ class GameController extends Controller
         //
         if(Utility::validPlayer())
         {
-            $result = array('game' => $game);
+            $getAll =Game::find($game->id)->with(array('movie', 'player1Game', 'player2Game'))->first();
+            $result = array('game' => $getAll);
             return response()->json($result)->setStatusCode(200);
         }
         $result = array('game' => null);
@@ -98,7 +99,11 @@ class GameController extends Controller
 
         }
 
-        $result = array('game' => $game);
+
+        $getAll =Game::find($game->id)->with(array('movie', 'player1Game', 'player2Game'))->first();
+        $result = array('game' => $getAll);
+
+
         return response()->json($result)->setStatusCode(204);
 
 

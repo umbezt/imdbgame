@@ -18,11 +18,11 @@ class Game extends Model
 
     public function player1Game()
     {
-        return $this->belongsTo(Player::class, 'player1' );
+        return $this->belongsTo(Player::class , 'player1' );
     }
     public function player2Game()
     {
-        return $this->belongsTo(Player::class, 'player2' );
+        return $this->belongsTo(Player::class , 'player2' );
     }
     public function state()
     {

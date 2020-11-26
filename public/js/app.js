@@ -1995,18 +1995,23 @@ __webpack_require__.r(__webpack_exports__);
       console.log("Call method to trigger event");
     });
     Echo.channel('gameUpdates').listen('GameUpdated', function (r) {
-      console.log("**********");
-      console.log(r);
+      var localGame = r.game;
 
       if (_.isEmpty(_this.game)) {
         _this.game = r.game;
         _this.questions = r.game.movie;
         _this.score1 = r.game.score1;
         _this.score2 = r.game.score2;
+      } else {
+        if (_this.game.id !== localGame.id) {
+          // stop funny business :)
+          return;
+        }
       }
 
-      var localGame = r.game;
-      _this.player1Name = localGame.player1_game.name;
+      if (Object.keys(localGame.player1_game).length > 0) {
+        _this.player1Name = localGame.player1_game.name;
+      }
 
       if (localGame.player2 != null) {
         if (Object.keys(localGame.player2_game).length > 0) {
@@ -2017,14 +2022,11 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         _this.player2Name = 'Waiting for a second player to join';
       }
-
-      console.log("**********");
     });
     Echo.channel('scoreUpdates').listen('ScoreUpdated', function (r) {
-      console.log("--------");
       _this.score1 = r.game.score1;
       _this.score2 = r.game.score2;
-      console.log("--------");
+      console.log("----scores updated----");
     });
   },
   methods: {
@@ -2037,13 +2039,13 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Game starting now',
           text: 'Good luck!'
         });
-        return setTimeout(this.nextQuestion, 3000);
+        return setTimeout(this.nextQuestion, 5000);
       }
     },
     nextQuestion: function nextQuestion() {
       if (this.questionIndex >= 0) {
         this.questionIndex -= 1;
-        return setTimeout(this.nextQuestion, 8000);
+        return setTimeout(this.nextQuestion, 10000);
       } else {
         this.endGame();
       }
@@ -51721,12 +51723,6 @@ var render = function() {
                 "router-link",
                 { staticClass: "nav-link", attrs: { to: { name: "home" } } },
                 [_vm._v("Home")]
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                { staticClass: "nav-link", attrs: { to: { name: "game" } } },
-                [_vm._v("New Game")]
               )
             ],
             1
@@ -51815,6 +51811,21 @@ var render = function() {
                             attrs: { type: "text" },
                             domProps: { value: question.pivot.answer1 },
                             on: {
+                              keydown: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.setAnswer(question)
+                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
@@ -51842,6 +51853,21 @@ var render = function() {
                             attrs: { type: "text" },
                             domProps: { value: question.pivot.answer2 },
                             on: {
+                              keydown: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.setAnswer(question)
+                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return

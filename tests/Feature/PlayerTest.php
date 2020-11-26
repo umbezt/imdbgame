@@ -18,8 +18,7 @@ class PlayerTest extends TestCase
     {
         $response = $this->postJson('/api/v1/player', ['name' => 'Sally']);
         $response
-            ->assertStatus(201)
-        ;
+            ->assertStatus(201);
     }
 
     /**
@@ -30,20 +29,19 @@ class PlayerTest extends TestCase
     {
         $response = $this->postJson('/api/v1/player', ['name' => 'Sally']);
         $response
-            ->assertStatus(201)
-        ;
+            ->assertStatus(201);
         $responsePlayer = json_decode($response->getContent(), true);
         $player = $responsePlayer['player'];
 
 
         $response = $this->withHeader('X-Cookie', $player['hashed_name'])
             ->withCookie(
-            'player',  $player['hashed_name']
-        )->getJson('/api/v1/player/start');
+                'player', $player['hashed_name']
+            )->getJson('/api/v1/player/start');
         $response
-            ->assertStatus(200)
-        ;
+            ->assertStatus(200);
     }
+
     /**
      *
      * @return void
@@ -54,38 +52,36 @@ class PlayerTest extends TestCase
         //Player 1 start game
         $response = $this->postJson('/api/v1/player', ['name' => 'Sally']);
         $response
-            ->assertStatus(201)
-        ;
+            ->assertStatus(201);
         $responsePlayer = json_decode($response->getContent(), true);
         $player = $responsePlayer['player'];
 
 
         $response = $this->withHeader('X-Cookie', $player['hashed_name'])
             ->withCookie(
-            'player',  $player['hashed_name']
-        )->getJson('/api/v1/player/start');
+                'player', $player['hashed_name']
+            )->getJson('/api/v1/player/start');
         $response
-            ->assertStatus(200)
-        ;
+            ->assertStatus(200);
 
 
         //Player 2 join game
         $response2 = $this->postJson('/api/v1/player', ['name' => 'Jane']);
         $response2
-            ->assertStatus(201)
-        ;
+            ->assertStatus(201);
         $responsePlayer2 = json_decode($response2->getContent(), true);
         $player2 = $responsePlayer2['player'];
 
 
         $response2 = $this->withHeader('X-Cookie', $player2['hashed_name'])
             ->withCookie(
-                'player',  $player2['hashed_name']
+                'player', $player2['hashed_name']
             )->getJson('/api/v1/player/start');
         $response2
-            ->assertStatus(200)
-        ;
-    }/**
+            ->assertStatus(200);
+    }
+
+    /**
      *
      * @return void
      */
@@ -95,85 +91,79 @@ class PlayerTest extends TestCase
         //Player 1 start game
         $response = $this->postJson('/api/v1/player', ['name' => 'Sally']);
         $response
-            ->assertStatus(201)
-        ;
+            ->assertStatus(201);
         $responsePlayer = json_decode($response->getContent(), true);
         $player = $responsePlayer['player'];
 
 
-        $response = $this->withHeader('X-Cookie', $player['hashed_name'])
+        $response1 = $this->withHeader('X-Cookie', $player['hashed_name'])
             ->withCookie(
-            'player',  $player['hashed_name']
-        )->getJson('/api/v1/player/start');
-        $response
-            ->assertStatus(200)
-        ;
-
+                'player', $player['hashed_name']
+            )->getJson('/api/v1/player/start');
+        $response1
+            ->assertStatus(200);
+        $this->flushHeaders();
 
         //Player 2 join game
         $response2 = $this->postJson('/api/v1/player', ['name' => 'Jane']);
         $response2
-            ->assertStatus(201)
-        ;
+            ->assertStatus(201);
         $responsePlayer2 = json_decode($response2->getContent(), true);
         $player2 = $responsePlayer2['player'];
 
 
-        $response2 = $this->withHeader('X-Cookie', $player2['hashed_name'])
+        $response3 = $this->withHeader('X-Cookie', $player2['hashed_name'])
             ->withCookie(
-                'player',  $player2['hashed_name']
+                'player', $player2['hashed_name']
             )->getJson('/api/v1/player/start');
-        $response2
-            ->assertStatus(200)
-        ;
-        $game =  json_decode($response->getContent());
-        //Play game
+        $response3
+            ->assertStatus(200);
+        $game = json_decode($response3->getContent());
 
-          $updateGameURL = '/api/v1/game/'. $game->game->id;
+        $updateGameURL = '/api/v1/game/' . $game->game->id;
 
 
         $movies = $game->game->movie;
         $score1 = $score2 = 0;
 
-        foreach ($movies as $movie){
+        foreach ($movies as $movie) {
             $player1Guess = rand(1990, 2015);
             $player2Guess = rand(1990, 2015);
-            if($player1Guess == $movie->yearOfRelease){
-                $score1+=5;
+            if ($player1Guess == $movie->yearOfRelease) {
+                $score1 += 5;
             } else {
-                $score1-=3;
+                $score1 -= 3;
             }
-            if($player2Guess == $movie->yearOfRelease){
-                $score2+=5;
+            if ($player2Guess == $movie->yearOfRelease) {
+                $score2 += 5;
             } else {
-                $score2-=3;
+                $score2 -= 3;
             }
-            $currentGameState = $this->putJson($updateGameURL, ['score1' => $score1, 'game_movie_id'  => $movie->pivot->id, 'answer1' => $player1Guess ]);
+            $currentGameState = $this->putJson($updateGameURL, ['score1' => $score1, 'game_movie_id' => $movie->pivot->id, 'answer1' => $player1Guess]);
 
             $currentGameState->assertStatus(204);
-            $currentGameState2 = $this->putJson($updateGameURL, ['score2' => $score2, 'game_movie_id'  => $movie->pivot->id, 'answer2' => $player2Guess ]);
+            $currentGameState2 = $this->putJson($updateGameURL, ['score2' => $score2, 'game_movie_id' => $movie->pivot->id, 'answer2' => $player2Guess]);
 
             $currentGameState2->assertStatus(204);
         }
 
-      //End game
-
+        //End game
+        $this->flushHeaders();
         $endGameResponse = $this->withHeader('X-Cookie', $player2['hashed_name'])
             ->withCookie(
-                'player',  $player2['hashed_name']
+                'player', $player2['hashed_name']
             )->getJson($updateGameURL);
         $endGameState = $endGameResponse->getContent();
         $endGameResponse->assertStatus(200);
-        $currentGameObject= json_decode($endGameState);
-
+        $currentGameObject = json_decode($endGameState);
 
 
         $endGame['state'] = 3;
-        if($currentGameObject->game->score1 != $currentGameObject->game->score2){
-            if($currentGameObject->game->score1 >  $currentGameObject->game->score2) {
-                $endGame['winner'] = $currentGameObject->game->player1 ;
+        if ($currentGameObject->game->score1 != $currentGameObject->game->score2) {
+            if ($currentGameObject->game->score1 > $currentGameObject->game->score2) {
+                $endGame['winner'] = $currentGameObject->game->player1;
             } else {
-                $endGame['winner'] = $currentGameObject->game->player2 ;
+                $endGame['winner'] = $currentGameObject->game->player2;
             }
         }
 
@@ -182,4 +172,63 @@ class PlayerTest extends TestCase
 
 
     }
+    /**
+     *
+     * @return void
+     */
+    public function testCanHaveTwoGamesRunning()
+    {
+        //Player 1 start game
+        $response = $this->postJson('/api/v1/player', ['name' => 'Sally']);
+        $response
+            ->assertStatus(201);
+        $responsePlayer = json_decode($response->getContent(), true);
+        $player = $responsePlayer['player'];
+
+
+        $response1 = $this->withHeader('X-Cookie', $player['hashed_name'])
+            ->withCookie(
+                'player', $player['hashed_name']
+            )->getJson('/api/v1/player/start');
+        $response1
+            ->assertStatus(200);
+
+
+        //Player 2 join game
+        $this->flushHeaders();
+        $response2 = $this->postJson('/api/v1/player', ['name' => 'Jane']);
+        $response2
+            ->assertStatus(201);
+        $responsePlayer2 = json_decode($response2->getContent(), true);
+        $player2 = $responsePlayer2['player'];
+
+
+        $response3 = $this->withHeader('X-Cookie', $player2['hashed_name'])
+            ->withCookie(
+                'player', $player2['hashed_name']
+            )->getJson('/api/v1/player/start');
+        $response3
+            ->assertStatus(200);
+        $game1 = json_decode($response3->getContent());
+        $this->flushHeaders();
+
+        //Player 3 join game
+        $response4 = $this->postJson('/api/v1/player', ['name' => 'Anesu']);
+        $response4
+            ->assertStatus(201);
+        $responsePlayer4 = json_decode($response4->getContent(), true);
+        $player3 = $responsePlayer4['player'];
+
+
+        $response5 = $this->withHeader('X-Cookie', $player3['hashed_name'])
+            ->withCookie(
+                'player', $player3['hashed_name']
+            )->getJson('/api/v1/player/start');
+        $response5
+            ->assertStatus(200);
+        $game2 = json_decode($response5->getContent());
+
+        $this->assertNotEquals($game1->game->id, $game2->game->id);
+    }
+
 }

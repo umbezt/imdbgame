@@ -51,10 +51,12 @@ class PlayerController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate(['name' => 'required|min:1|max:280|string']);
+
+
         $data['hashed_name'] = Utility::hashName($data['name'], $request->ip());
         $hasAlreadySetName = Utility::getPlayer($data['hashed_name']);
         if ($hasAlreadySetName->count() > 0) {
-            $player = $hasAlreadySetName->first();
+            $player = $hasAlreadySetName->last();
             $result = array('player' =>$player);
 
             return response()->json($result)->setStatusCode(201);
@@ -89,7 +91,7 @@ class PlayerController extends Controller
 
         //
 
-        $player = (Utility::getPlayer())->first() ;
+        $player = (Utility::getPlayer())->last() ;
 
         $hasActiveGame = Utility::hasActiveGame($player);
         if($hasActiveGame){

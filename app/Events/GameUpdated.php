@@ -19,10 +19,10 @@ class GameUpdated implements ShouldBroadcast
 
     /**
      * Create a new event instance.
-     * @param Game $game
+     * @param game
      * @return void
      */
-    public function __construct(Game $game)
+    public function __construct( $game)
     {
         //
         $this->game = $game;

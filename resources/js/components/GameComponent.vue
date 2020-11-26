@@ -12,8 +12,8 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ question.title }}</h3>
 
-                        <input type="text" v-model="question.pivot.answer1" v-if="player.id === game.player1">
-                        <input type="text" v-model="question.pivot.answer2" v-if="player.id === game.player2">
+                        <input type="text" v-model="question.pivot.answer1" v-if="player.id === game.player1" @keydown.enter="setAnswer(question)">
+                        <input type="text" v-model="question.pivot.answer2" v-if="player.id === game.player2" @keydown.enter="setAnswer(question)">
                         <a href="#" class="btn btn-sm" @click.prevent="setAnswer(question)">Set Answer</a>
 
                     </div>
@@ -48,26 +48,28 @@ export default {
         axios.get('/api/v1/player/start').then(res => {
 
             console.log("Call method to trigger event");
-
-
-
-
         });
         Echo.channel('gameUpdates').listen('GameUpdated',
             (r) => {
-                console.log("**********");
 
-                console.log(r);
+                let localGame = r.game;
+
                 if(_.isEmpty(this.game)){
                     this.game = r.game;
                     this.questions = r.game.movie;
                     this.score1 = r.game.score1;
                     this.score2 = r.game.score2;
 
-                }
-               let localGame = r.game;
-                this.player1Name = localGame.player1_game.name;
+                } else {
+                    if (this.game.id !== localGame.id) { // stop funny business :)
+                        return;
+                    }
 
+                }
+
+                if (Object.keys(localGame.player1_game).length > 0){
+                    this.player1Name = localGame.player1_game.name;
+                }
 
                 if (localGame.player2 != null) {
                     if (Object.keys(localGame.player2_game).length > 0) {
@@ -78,15 +80,15 @@ export default {
                     this.player2Name = 'Waiting for a second player to join';
                 }
 
-                console.log("**********");
+
             });
         Echo.channel('scoreUpdates').listen('ScoreUpdated',
             (r) => {
-                console.log("--------");
 
                 this.score1 = r.game.score1;
                 this.score2 = r.game.score2;
-                console.log("--------");
+                console.log("----scores updated----");
+
             });
     },
     methods: {
@@ -100,7 +102,7 @@ export default {
                     text: 'Good luck!',
 
                 }) ;
-                return setTimeout(this.nextQuestion, 3000);
+                return setTimeout(this.nextQuestion, 5000);
             }
         },
         nextQuestion() {
@@ -108,7 +110,7 @@ export default {
             if (this.questionIndex >= 0) {
 
                 this.questionIndex -= 1;
-                return setTimeout(this.nextQuestion, 8000);
+                return setTimeout(this.nextQuestion, 10000);
             } else {
                 this.endGame();
             }
