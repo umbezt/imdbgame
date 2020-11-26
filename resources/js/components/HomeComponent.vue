@@ -19,6 +19,9 @@
             <button class="btn btn-sm btn-success " type="submit">
                 Start a game
             </button>
+            <button class="btn btn-sm btn-outline-danger " @click="logoutGame()">
+               logout
+            </button>
         </form>
 
         <last-games-component games="games"></last-games-component>
@@ -70,7 +73,7 @@ export default {
         setName() {
             if (this.name.trim() !== '') {
                 axios.post('/api/v1/player', {name: this.name}).then(res => {
-                    this.player = '';
+                    this.player = {};
                     console.log(res.data);
                     this.player = res.data.player;
                     localStorage.player = JSON.stringify(res.data.player);
@@ -80,8 +83,9 @@ export default {
         },
         logoutGame() {
 
-            this.player = '';
+            this.player = {};
             localStorage.player = '';
+            localStorage.clear();
             window.setCookie('player', null, 0);
 
 

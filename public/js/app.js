@@ -1970,6 +1970,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Game",
   data: function data() {
@@ -1989,29 +1992,25 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/v1/player/start').then(function (res) {
-      if (Object.keys(res.data.game).length > 0) {
-        _this.game = res.data.game;
-        _this.questions = _this.game.movie;
-        _this.score1 = _this.game.score1;
-        _this.score2 = _this.game.score2;
-        _this.player1Name = _this.game.player1_game.name;
-
-        if (_this.game.player2 != null) {
-          if (Object.keys(_this.game.player2_game).length > 0) {
-            _this.player2Name = _this.game.player2_game.name;
-          }
-        } else {
-          _this.player2Name = 'Waiting for a second player to join';
-        }
-      }
+      console.log("Call method to trigger event");
     });
     Echo.channel('gameUpdates').listen('GameUpdated', function (r) {
       console.log("**********");
-      _this.game = r.game;
+      console.log(r);
 
-      if (_this.game.player2_game != null) {
-        if (Object.keys(_this.game.player2_game).length > 0) {
-          _this.player2Name = _this.game.player2_game.name;
+      if (_.isEmpty(_this.game)) {
+        _this.game = r.game;
+        _this.questions = r.game.movie;
+        _this.score1 = r.game.score1;
+        _this.score2 = r.game.score2;
+      }
+
+      var localGame = r.game;
+      _this.player1Name = localGame.player1_game.name;
+
+      if (localGame.player2 != null) {
+        if (Object.keys(localGame.player2_game).length > 0) {
+          _this.player2Name = localGame.player2_game.name;
 
           _this.manageGame();
         }
@@ -2022,24 +2021,22 @@ __webpack_require__.r(__webpack_exports__);
       console.log("**********");
     });
     Echo.channel('scoreUpdates').listen('ScoreUpdated', function (r) {
-      console.log("**********");
-
-      if (_this.player.id === _this.game.player1) {
-        _this.score2 = _this.game.score2;
-      }
-
-      if (_this.player.id === _this.game.player2) {
-        _this.score1 = _this.game.score1;
-      }
-
-      console.log("**********");
+      console.log("--------");
+      _this.score1 = r.game.score1;
+      _this.score2 = r.game.score2;
+      console.log("--------");
     });
   },
   methods: {
     manageGame: function manageGame() {
       //
       if (this.game.state == 2) {
-        this.nextQuestion();
+        Swal.fire({
+          icon: 'info',
+          title: 'Game starting now',
+          text: 'Good luck!'
+        });
+        return setTimeout(this.nextQuestion, 3000);
       }
     },
     nextQuestion: function nextQuestion() {
@@ -2087,7 +2084,16 @@ __webpack_require__.r(__webpack_exports__);
             title: '-_-',
             text: 'No winner!'
           });
-        }
+        } //reset game objects
+
+
+        _this2.questionIndex = 8;
+        _this2.game = {};
+        _this2.player1Name = '';
+        _this2.player2Name = '';
+        _this2.questions = [];
+        _this2.score1 = 0;
+        _this2.score2 = 0;
 
         _this2.$router.push('/');
       });
@@ -2169,6 +2175,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
@@ -2210,7 +2219,7 @@ __webpack_require__.r(__webpack_exports__);
         axios.post('/api/v1/player', {
           name: this.name
         }).then(function (res) {
-          _this2.player = '';
+          _this2.player = {};
           console.log(res.data);
           _this2.player = res.data.player;
           localStorage.player = JSON.stringify(res.data.player);
@@ -2219,8 +2228,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     logoutGame: function logoutGame() {
-      this.player = '';
+      this.player = {};
       localStorage.player = '';
+      localStorage.clear();
       window.setCookie('player', null, 0);
     },
     playGame: function playGame() {
@@ -51969,6 +51979,19 @@ var render = function() {
                   attrs: { type: "submit" }
                 },
                 [_vm._v("\n            Start a game\n        ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-outline-danger ",
+                  on: {
+                    click: function($event) {
+                      return _vm.logoutGame()
+                    }
+                  }
+                },
+                [_vm._v("\n           logout\n        ")]
               )
             ]
           ),

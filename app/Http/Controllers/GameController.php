@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GameUpdated;
+use App\Events\ScoreUpdated;
 use App\Game;
 use App\GameMovie;
 use App\Service\Utility;
@@ -86,7 +88,7 @@ class GameController extends Controller
         $data = $request->all();
         $game->fill($data);
         $game->save();
-
+        broadcast(new ScoreUpdated($game));
 
         if (isset($data['game_movie_id'])) {
 
