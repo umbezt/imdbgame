@@ -2105,6 +2105,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.player.id === this.game.player1) {
         data.answer1 = info.pivot.answer1;
+        data.correct = parseInt(info.pivot.answer1) === info.yearOfRelease;
 
         if (data.correct) {
           this.game.score1 += 5;
@@ -2118,6 +2119,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.player.id === this.game.player2) {
         data.answer2 = info.pivot.answer2;
+        data.correct = parseInt(info.pivot.answer2) === info.yearOfRelease;
 
         if (data.correct) {
           this.game.score2 += 5;
