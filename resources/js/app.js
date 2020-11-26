@@ -9,6 +9,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.Swal  = require('sweetalert2');
 
 window.setCookie = function (cname, cvalue, exdays) {
     var d = new Date();

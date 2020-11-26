@@ -106,6 +106,8 @@ export default {
 
                 this.questionIndex -= 1;
                 return setTimeout(this.nextQuestion, 8000);
+            } else{
+                this.endGame();
             }
         },
         endGame(){
@@ -118,10 +120,39 @@ export default {
                     data.winner = this.game.player2;
                 }
             }
+            let gameURL = '/api/v1/game/' + this.game.id ;
+            axios.put(gameURL, data).then(res => {
+                if(data.winner)
+                {
+                    if(data.winner == this.player.id) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'yeah...',
+                            text: 'Congratulations!',
+
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Better luck next time!',
+
+                        })
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'info',
+                        title: '-_-',
+                        text: 'No winner!',
+
+                    })
+                }
+                this.$router.push('/');
+            });
         }
         ,
         setAnswer(info){
-           console.log(info);
+
            let data = { game_movie_id : info.pivot.id };
            if(this.player.id === this.game.player1){
               data.answer1 = info.pivot.answer1;
