@@ -13,7 +13,7 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'player1', 'player2',
+        'player1', 'player2', 'score1', 'score2' , 'state', 'current_question' , 'winner'
     ];
 
     public function player1Game()

@@ -88,5 +88,21 @@ class Utility
         }
         return Player::where('hashed_name', $cookie)->get();
     }
+    public static function validPlayer(): bool
+    {
+        $cookie = '';
+        if(\request()->hasCookie('player'))
+        {
+            $cookie = \request()->cookie('player');
+        }
+        if(\request()->hasHeader('X-Cookie')){
+            $cookie = \request()->header('X-Cookie');
+        }
+        $player = Player::where('hashed_name', $cookie)->get();
+        if($player->count() > 0){
+            return true;
+        }
+        return  false;
+    }
 
 }

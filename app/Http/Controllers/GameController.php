@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Game;
+use App\GameMovie;
+use App\Service\Utility;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -16,7 +18,7 @@ class GameController extends Controller
     {
         //
         $games = Game::with(array('player1Game', 'player2Game', 'movie'))->latest()->limit(10)->get();
-        $result = array('games' =>$games);
+        $result = array('games' => $games);
         return response()->json($result)->setStatusCode(200);
 
     }
@@ -34,7 +36,7 @@ class GameController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -45,18 +47,25 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Game $game
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Game $game)
     {
         //
+        if(Utility::validPlayer())
+        {
+            $result = array('game' => $game);
+            return response()->json($result)->setStatusCode(200);
+        }
+        $result = array('game' => null);
+        return response()->json($result)->setStatusCode(401);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -67,8 +76,8 @@ class GameController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Game  $game
+     * @param \Illuminate\Http\Request $request
+     * @param Game $game
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Game $game)
@@ -78,15 +87,17 @@ class GameController extends Controller
         $game->fill($data);
         $game->save();
 
-        $gameMovie = $game->movie;
-        if(isset($data['score1'])){
 
+        if (isset($data['game_movie_id'])) {
 
+            $gameMovie = GameMovie::findOrFail($data['game_movie_id']);
+            $gameMovie->fill($data);
+            $gameMovie->save();
 
         }
-        if(isset($data['score1'])){
 
-        }
+        $result = array('game' => $game);
+        return response()->json($result)->setStatusCode(204);
 
 
     }
@@ -95,7 +106,7 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
