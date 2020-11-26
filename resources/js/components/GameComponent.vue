@@ -95,6 +95,7 @@ export default {
             if (this.game.state == 2) {
                 Swal.fire({
                     icon: 'info',
+                    timer: 2500,
                     title: 'Game starting now',
                     text: 'Good luck!',
 
@@ -128,13 +129,15 @@ export default {
                     if (data.winner == this.player.id) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'yeah...',
+                            timer: 3000,
+                            title: 'Yeah... You Won',
                             text: 'Congratulations!',
 
                         });
                     } else {
                         Swal.fire({
                             icon: 'error',
+                            timer: 3000,
                             title: 'Oops...',
                             text: 'Better luck next time!',
 
@@ -143,6 +146,7 @@ export default {
                 } else {
                     Swal.fire({
                         icon: 'info',
+                        timer: 3000,
                         title: '-_-',
                         text: 'No winner!',
 

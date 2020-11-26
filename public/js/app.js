@@ -2033,6 +2033,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.game.state == 2) {
         Swal.fire({
           icon: 'info',
+          timer: 2500,
           title: 'Game starting now',
           text: 'Good luck!'
         });
@@ -2068,12 +2069,14 @@ __webpack_require__.r(__webpack_exports__);
           if (data.winner == _this2.player.id) {
             Swal.fire({
               icon: 'success',
-              title: 'yeah...',
+              timer: 3000,
+              title: 'Yeah... You Won',
               text: 'Congratulations!'
             });
           } else {
             Swal.fire({
               icon: 'error',
+              timer: 3000,
               title: 'Oops...',
               text: 'Better luck next time!'
             });
@@ -2081,6 +2084,7 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           Swal.fire({
             icon: 'info',
+            timer: 3000,
             title: '-_-',
             text: 'No winner!'
           });
