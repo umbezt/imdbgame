@@ -2046,6 +2046,13 @@ __webpack_require__.r(__webpack_exports__);
     nextQuestion: function nextQuestion() {
       if (this.questionIndex >= 0) {
         this.questionIndex -= 1;
+        var nameElement = document.querySelector('input[name=answer]');
+
+        if (nameElement) {
+          console.log(nameElement);
+          nameElement.focus(); //nameElement.select();
+        }
+
         return setTimeout(this.nextQuestion, 10000);
       } else {
         this.endGame();
@@ -51794,7 +51801,7 @@ var render = function() {
                                 expression: "question.pivot.answer1"
                               }
                             ],
-                            attrs: { type: "text", autofocus: "" },
+                            attrs: { type: "text", name: "answer" },
                             domProps: { value: question.pivot.answer1 },
                             on: {
                               keydown: function($event) {
@@ -51836,7 +51843,7 @@ var render = function() {
                                 expression: "question.pivot.answer2"
                               }
                             ],
-                            attrs: { type: "text", autofocus: "" },
+                            attrs: { type: "text", name: "answer" },
                             domProps: { value: question.pivot.answer2 },
                             on: {
                               keydown: function($event) {
