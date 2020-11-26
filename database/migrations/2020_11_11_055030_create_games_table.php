@@ -18,6 +18,8 @@ class CreateGamesTable extends Migration
             $table->integer('state')->default(1);
             $table->integer('score1')->default(0);
             $table->integer('score2')->default(0);
+            $table->integer('current_question')->default(0);
+            $table->timestamp('question_timestamp')->nullable();
             $table->unsignedBigInteger('player1')->nullable();
             $table->unsignedBigInteger('player2')->nullable();
             $table->unsignedBigInteger('winner')->nullable();

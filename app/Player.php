@@ -23,4 +23,6 @@ class Player extends Model
     {
         return $this->hasMany(Game::class, 'player2' );
     }
+
+
 }

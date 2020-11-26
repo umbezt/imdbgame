@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GameUpdated;
 use App\Player;
 use App\Service\Utility;
+use \Illuminate\Support\Facades\Cookie;
 use Illuminate\Http\Request;
 
 class PlayerController extends Controller
@@ -16,6 +18,17 @@ class PlayerController extends Controller
     public function index()
     {
         //
+        $cookie = '';
+        if(\request()->hasCookie('player'))
+        {
+            $cookie = \request()->cookie('player');
+        }
+        if(\request()->hasHeader('X-Cookie')){
+            $cookie = \request()->header('X-Cookie');
+        }
+        $player = (Utility::getPlayer($cookie))->first() ;
+        $result = array('player' => $player);
+        return response()->json($result)->setStatusCode(200);
     }
 
     /**
@@ -26,6 +39,7 @@ class PlayerController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -40,8 +54,9 @@ class PlayerController extends Controller
         $data['hashed_name'] = Utility::hashName($data['name'], $request->ip());
         $hasAlreadySetName = Utility::getPlayer($data['hashed_name']);
         if ($hasAlreadySetName->count() > 0) {
+            $player = $hasAlreadySetName->first();
+            $result = array('player' =>$player);
 
-            $result = array('player' => $hasAlreadySetName->first());
             return response()->json($result)->setStatusCode(201);
         }
         $player = Player::create($data);
@@ -71,15 +86,23 @@ class PlayerController extends Controller
      */
     public function startGame()
     {
+
         //
-        $cookie = '';
-        if(\request()->hasCookie('player'))
-        {
-            $cookie = \request()->cookie('player');
-        }
-        $player = (Utility::getPlayer($cookie))->first() ;
+
+        $player = (Utility::getPlayer())->first() ;
 
         $hasActiveGame = Utility::hasActiveGame($player);
+        if($hasActiveGame){
+
+            $game = Utility::getActiveGame($player);
+            $result = array('game' => $game);
+            return response()->json($result)->setStatusCode(200);
+        }
+
+        $game = Utility::joinGame($player);
+        broadcast(new GameUpdated($game));
+        $result = array('game' => $game);
+        return response()->json($result)->setStatusCode(200);
 
 
     }

@@ -22,5 +22,11 @@
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "animate.css": "^4.1.1",
+        "laravel-echo": "^1.4.0",
+        "pusher-js": "^4.3.1",
+        "vue-router": "^3.4.9"
     }
 }

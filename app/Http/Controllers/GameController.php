@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Game;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -14,6 +15,9 @@ class GameController extends Controller
     public function index()
     {
         //
+        $games = Game::with(array('player1Game', 'player2Game', 'movie'))->latest()->limit(10)->get();
+        $result = array('games' =>$games);
+        return response()->json($result)->setStatusCode(200);
 
     }
 
@@ -64,13 +68,29 @@ class GameController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Game $game)
     {
         //
+        $data = $request->all();
+        $game->fill($data);
+        $game->save();
+
+        $gameMovie = $game->movie;
+        if(isset($data['score1'])){
+
+
+
+        }
+        if(isset($data['score1'])){
+
+        }
+
+
     }
+
 
     /**
      * Remove the specified resource from storage.

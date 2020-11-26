@@ -15,4 +15,9 @@ class GameStatus extends Model
     protected $fillable = [
         'description',
     ];
+
+    public function game()
+    {
+        return $this->hasMany(Game::class, 'state' );
+    }
 }

@@ -14,4 +14,9 @@ class Movie extends Model
     protected $fillable = [
         'title', 'yearOfRelease', 'imageUrl',
     ];
+
+    public function game()
+    {
+        return $this->belongsToMany(Game::class, 'game_movies' );
+    }
 }

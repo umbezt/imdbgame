@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/storage/database.sqlite</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="guessyear@localhost" uuid="9391155a-7de3-4c97-b5c1-96f899e101eb">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://localhost:3306/guessyear</jdbc-url>
+    </data-source>
   </component>
 </project>

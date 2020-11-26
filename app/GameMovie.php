@@ -2,9 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class GameMovie extends Model
+class GameMovie extends Pivot
 {
-    //
+
+
+    public $incrementing = true;
 }

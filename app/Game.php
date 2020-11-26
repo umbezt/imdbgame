@@ -15,4 +15,26 @@ class Game extends Model
     protected $fillable = [
         'player1', 'player2',
     ];
+
+    public function player1Game()
+    {
+        return $this->belongsTo(Player::class, 'player1' );
+    }
+    public function player2Game()
+    {
+        return $this->belongsTo(Player::class, 'player2' );
+    }
+    public function state()
+    {
+        return $this->belongsTo(GameStatus::class, 'state' );
+    }
+    public function movie()
+    {
+        return $this
+            ->belongsToMany(Movie::class, 'game_movies', 'game_id', 'movie_id' )
+            ->withPivot([ 'id',
+                'answer1',
+                'answer2'
+                ]);
+    }
 }
