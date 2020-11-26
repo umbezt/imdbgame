@@ -2003,7 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.score1 = r.game.score1;
         _this.score2 = r.game.score2;
       } else {
-        if (_this.game.id !== localGame.id) {
+        if (_this.game.id != localGame.id) {
           // stop funny business :)
           return;
         }
@@ -2015,6 +2015,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (localGame.player2 != null) {
         if (Object.keys(localGame.player2_game).length > 0) {
+          _this.game.state = localGame.state;
           _this.player2Name = localGame.player2_game.name;
 
           _this.manageGame();
@@ -51770,21 +51771,6 @@ var render = function() {
             _c("small", [_vm._v(_vm._s(_vm.score2))])
           ]),
           _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-sm",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.nextQuestion()
-                }
-              }
-            },
-            [_vm._v("Start")]
-          ),
-          _vm._v(" "),
           _c("div", { staticClass: "clear" }),
           _vm._v(" "),
           _vm._l(_vm.questions, function(question, index) {
@@ -51808,7 +51794,7 @@ var render = function() {
                                 expression: "question.pivot.answer1"
                               }
                             ],
-                            attrs: { type: "text" },
+                            attrs: { type: "text", autofocus: "" },
                             domProps: { value: question.pivot.answer1 },
                             on: {
                               keydown: function($event) {
@@ -51850,7 +51836,7 @@ var render = function() {
                                 expression: "question.pivot.answer2"
                               }
                             ],
-                            attrs: { type: "text" },
+                            attrs: { type: "text", autofocus: "" },
                             domProps: { value: question.pivot.answer2 },
                             on: {
                               keydown: function($event) {

@@ -5,15 +5,15 @@
                 <h2 class="text-center">{{ player1Name }} <small>{{ score1 }}</small><span> VS  </span> {{
                         player2Name
                     }} <small>{{ score2 }}</small></h2>
-                <a href="#" class="btn btn-sm" @click.prevent="nextQuestion()">Start</a>
+
                 <div class="clear"></div>
                 <div class="card d-block" v-for="(question, index) in questions" :key="question.pivot.id"
                      v-if="index === questionIndex">
                     <div class="card-body">
                         <h3 class="card-title">{{ question.title }}</h3>
 
-                        <input type="text" v-model="question.pivot.answer1" v-if="player.id === game.player1" @keydown.enter="setAnswer(question)">
-                        <input type="text" v-model="question.pivot.answer2" v-if="player.id === game.player2" @keydown.enter="setAnswer(question)">
+                        <input type="text" v-model="question.pivot.answer1" v-if="player.id === game.player1" @keydown.enter="setAnswer(question)" autofocus>
+                        <input type="text" v-model="question.pivot.answer2" v-if="player.id === game.player2" @keydown.enter="setAnswer(question)" autofocus>
                         <a href="#" class="btn btn-sm" @click.prevent="setAnswer(question)">Set Answer</a>
 
                     </div>
@@ -61,7 +61,8 @@ export default {
                     this.score2 = r.game.score2;
 
                 } else {
-                    if (this.game.id !== localGame.id) { // stop funny business :)
+                    if (this.game.id != localGame.id) { // stop funny business :)
+
                         return;
                     }
 
@@ -73,6 +74,7 @@ export default {
 
                 if (localGame.player2 != null) {
                     if (Object.keys(localGame.player2_game).length > 0) {
+                        this.game.state = localGame.state;
                         this.player2Name = localGame.player2_game.name;
                         this.manageGame();
                     }
